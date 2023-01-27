@@ -1,24 +1,15 @@
 const express = require('express')
-
+const axios = require('axios')
 const routes = express.Router();
 
-const products = [
-  {
-    id: 1,
-    name: "Product X",
-    description: "A beautiful product X",
-    price: 33.50
-  },
-  {
-    id: 2,
-    name: "Product Y",
-    description: "A beautiful product Y",
-    price: 32.50
-  }
-];
-
-routes.get('/products', (req, res)=>{
-  return res.status(200).json(products);
+routes.get('/products', async (req, res)=>{
+    const products = await getProducts();
+    return res.send(products);
 })
+
+async function getProducts(){
+    let resp = await axios.get("https://api.beuni.com.br/atlas/brands/v2/products?q=&category=&min=0&max=99999&sortBy=featured&page=1&perPage=50")
+    return resp['data'];
+}
 
 module.exports = routes;
