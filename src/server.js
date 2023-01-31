@@ -7,12 +7,16 @@ app.use(express.json())
 app.use(cors())
 app.use(routes)
 
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
 
+let PORT = 3001
 
-const PORT = 3001
+// Get port via command line
+process.argv.forEach(function (val, index, ) {
+  if(val.startsWith("port")){
+    PORT = val.split("port=")[1]
+  }
+});
+
 app.listen(PORT, () => {
   console.log('Listening on port ' + PORT)
 })
