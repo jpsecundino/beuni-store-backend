@@ -8,7 +8,7 @@ app.use(cors())
 app.use(routes)
 
 
-let PORT = 3001
+let PORT = 4000
 
 // Get port via command line
 process.argv.forEach(function (val, index, ) {
