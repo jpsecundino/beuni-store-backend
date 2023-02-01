@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+const removeAccents = require('remove-accents')
 class StoreProductHandler {
   #API_URL = 'https://api.beuni.com.br/atlas/brands/v2/products?q=&category=&min=0&max=99999&sortBy=featured&page=1&perPage=50';
 
@@ -23,10 +23,14 @@ class StoreProductHandler {
        return products;
      }
 
+     const nameWithoutDiacritics = removeAccents(name);
+
     return products
-              .filter(product =>
-                product.name.toLowerCase()
-                            .includes(name.toLowerCase()));
+              .filter(product => {
+                const productNameWithoutDiacritics = removeAccents(product.name);
+                return productNameWithoutDiacritics.toLowerCase()
+                    .includes(nameWithoutDiacritics.toLowerCase())
+              });
   }
 
   #filterById(products, id) {
